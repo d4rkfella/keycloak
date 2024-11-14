@@ -26,8 +26,8 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build . --file ./apps/keycloak/Dockerfile \
-          --tag ghcr.io/darkfella91/keycloak:latest
+          --tag ghcr.io/darkfella91/keycloak-image:latest
 
     - name: Push the Docker image to GitHub Container Registry
       run: |
-        docker push ghcr.io/darkfella91/keycloak:latest
+        docker push ghcr.io/darkfella91/keycloak-image:latest
