@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/**/Dockerfile'
+      - 'apps/keycloak/Dockerfile'
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: my-docker-repo/keycloak:${{ env.KEYCLOAK_VERSION }}
+        tags: darkfella91/keycloak:${{ env.KEYCLOAK_VERSION }}
         platforms: linux/amd64
         build-args: |
           KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
