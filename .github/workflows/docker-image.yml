@@ -40,7 +40,9 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: darkfella91/keycloak-image:${{ env.KEYCLOAK_VERSION }}
+        tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ env.KEYCLOAK_VERSION }}
         platforms: linux/amd64
         build-args: |
           KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
