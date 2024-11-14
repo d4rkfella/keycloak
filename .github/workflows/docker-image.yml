@@ -43,5 +43,5 @@ jobs:
         platforms: linux/amd64
         build-args: |
           KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
-        file: .apps/keycloak/Dockerfile
+        file: apps/keycloak/Dockerfile
         context: .
