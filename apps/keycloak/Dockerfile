@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:26.0.5-0@sha256:442858558c106184ebc40ac515571f85f7bfb586fd5256d7cffa5cd3573e7b68 as builder
+FROM quay.io/keycloak/keycloak:26.0.4-0@sha256:442858558c106184ebc40ac515571f85f7bfb586fd5256d7cffa5cd3573e7b68 as builder
 
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
