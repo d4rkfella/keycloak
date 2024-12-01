@@ -20,11 +20,11 @@ jobs:
     - name: Extract Keycloak Version from Dockerfile
       id: extract_version
       run: |
-        # Extract the version from the 'builder' line in the Dockerfile
-        KEYCLOAK_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' apps/keycloak/Dockerfile | head -n 1)
-        KEYCLOAK_VERSION=$(echo $KEYCLOAK_VERSION | xargs)
-        echo "Keycloak version: $KEYCLOAK_VERSION"
-        echo "KEYCLOAK_VERSION=$KEYCLOAK_VERSION" >> $GITHUB_ENV
+        KEYCLOAK_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' Dockerfile | head -n 1) >> $GITHUB_ENV
+
+    - name: Lowercase repository owner
+      shell: bash
+      run: echo "LOWERCASE_REPO_OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -36,23 +36,15 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         
-    - name: Convert Repository Name to Lowercase
-      id: lowercase_repo
-      run: |
-        # Convert the GitHub repository name to lowercase
-        LOWERCASE_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-        echo "Lowercase repository name: $LOWERCASE_REPO"
-        echo "LOWERCASE_REPO=$LOWERCASE_REPO" >> $GITHUB_ENV
-
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v6
       with:
         push: true
         tags: |
-            ghcr.io/${{ env.LOWERCASE_REPO }}:latest
-            ghcr.io/${{ env.LOWERCASE_REPO }}:${{ env.KEYCLOAK_VERSION }}
+            ghcr.io/${{ env.LOWERCASE_REPO }}/keycloak:latest
+            ghcr.io/${{ env.LOWERCASE_REPO }}/keycloak:${{ env.KEYCLOAK_VERSION }}
         platforms: linux/amd64
         build-args: |
           KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
-        file: apps/keycloak/Dockerfile
+        file: Dockerfile
         context: .
