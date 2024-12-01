@@ -44,7 +44,5 @@ jobs:
             ghcr.io/${{ env.LOWERCASE_REPO }}/keycloak:latest
             ghcr.io/${{ env.LOWERCASE_REPO }}/keycloak:${{ env.KEYCLOAK_VERSION }}
         platforms: linux/amd64
-        build-args: |
-          KEYCLOAK_VERSION=${{ env.KEYCLOAK_VERSION }}
         file: Dockerfile
         context: .
