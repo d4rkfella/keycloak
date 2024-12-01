@@ -18,9 +18,8 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Extract Keycloak Version from Dockerfile
-      id: extract_version
-      run: |
-        KEYCLOAK_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' Dockerfile | head -n 1) >> $GITHUB_ENV
+      shell: bash
+      run: echo KEYCLOAK_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' Dockerfile | head -n 1) >> $GITHUB_ENV
 
     - name: Lowercase repository owner
       shell: bash
