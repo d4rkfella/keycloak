@@ -4,6 +4,7 @@
     "config:recommended",
     "docker:enableMajor",
     ":dependencyDashboard",
+    ":automergeBranch",
     ":disableRateLimiting",
     ":timezone(Europe/Sofia)",
     ":semanticCommits"
@@ -33,7 +34,8 @@
       "matchUpdateTypes": ["minor"],
       "semanticCommitScope": "{{parentDir}}",
       "semanticCommitType": "feat",
-      "automerge": true
+      "automerge": true,
+      "automergeType": "branch"
     },
     {
       "addLabels": ["renovate/container", "type/patch"],
@@ -46,7 +48,8 @@
       "matchUpdateTypes": ["patch"],
       "semanticCommitScope": "{{parentDir}}",
       "semanticCommitType": "fix",
-      "automerge": true
+      "automerge": true,
+      "automergeType": "branch"
     }
   ]
 }
