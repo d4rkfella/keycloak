@@ -5,7 +5,7 @@
     "docker:enableMajor",
     ":dependencyDashboard",
     ":disableRateLimiting",
-    ":timezone(America/New_York)",
+    ":timezone(Europe/Sofia)",
     ":semanticCommits"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
@@ -17,9 +17,9 @@
       "commitMessageExtra": " ( {{currentVersion}} → {{newVersion}} )",
       "commitMessagePrefix": "feat({{parentDir}})!: ",
       "commitMessageTopic": "{{depName}}",
-      "labels": ["app/{{parentDir}}"],
+      "labels": ["{{parentDir}}"],
       "matchDatasources": ["docker"],
-      "matchFileNames": ["apps/**/Dockerfile"],
+      "matchFileNames": ["Dockerfile"],
       "matchUpdateTypes": ["major"]
     },
     {
@@ -27,24 +27,26 @@
       "additionalBranchPrefix": "{{parentDir}}-",
       "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )",
       "commitMessageTopic": "{{depName}}",
-      "labels": ["app/{{parentDir}}"],
+      "labels": ["{{parentDir}}"],
       "matchDatasources": ["docker"],
-      "matchFileNames": ["apps/**/Dockerfile"],
+      "matchFileNames": ["Dockerfile"],
       "matchUpdateTypes": ["minor"],
       "semanticCommitScope": "{{parentDir}}",
       "semanticCommitType": "feat"
+      "automerge": true
     },
     {
       "addLabels": ["renovate/container", "type/patch"],
       "additionalBranchPrefix": "{{parentDir}}-",
       "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )",
       "commitMessageTopic": "{{depName}}",
-      "labels": ["app/{{parentDir}}"],
+      "labels": ["{{parentDir}}"],
       "matchDatasources": ["docker"],
-      "matchFileNames": ["apps/**/Dockerfile"],
+      "matchFileNames": ["Dockerfile"],
       "matchUpdateTypes": ["patch"],
       "semanticCommitScope": "{{parentDir}}",
-      "semanticCommitType": "fix"
+      "semanticCommitType": "fix",
+      "automerge": true
     }
   ]
 }
