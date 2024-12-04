@@ -32,8 +32,8 @@
       "matchFileNames": ["Dockerfile"],
       "matchUpdateTypes": ["minor"],
       "semanticCommitScope": "{{parentDir}}",
-      "semanticCommitType": "feat"
-      "automerge": "true"
+      "semanticCommitType": "feat",
+      "automerge": true
     },
     {
       "addLabels": ["renovate/container", "type/patch"],
@@ -46,7 +46,7 @@
       "matchUpdateTypes": ["patch"],
       "semanticCommitScope": "{{parentDir}}",
       "semanticCommitType": "fix",
-      "automerge": "true"
+      "automerge": true
     }
   ]
 }
