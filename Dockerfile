@@ -12,5 +12,6 @@ FROM quay.io/keycloak/keycloak:latest
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 ENV KC_CACHE_STACK=kubernetes
+ENV JDBC_PARAMS=sslmode=verify-ca&sslrootcert=/etc/ssl/certs/cnpg-ca.crt
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
