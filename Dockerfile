@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:26.0.7@sha256:32d2eb0f84aaf85b3e3afef544d5b25fcd40a791d62374f327a0cb5ca9aa1da5 AS builder
+FROM quay.io/keycloak/keycloak:26.0.8@sha256:8fb7bfca18df664a4f9a9c49fc36e34d65e43fe618169e3044730cc9a1f1d2cf AS builder
 
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
@@ -8,7 +8,7 @@ WORKDIR /opt/keycloak
 
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:26.0.7@sha256:32d2eb0f84aaf85b3e3afef544d5b25fcd40a791d62374f327a0cb5ca9aa1da5
+FROM quay.io/keycloak/keycloak:26.0.8@sha256:8fb7bfca18df664a4f9a9c49fc36e34d65e43fe618169e3044730cc9a1f1d2cf
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 ENV KC_CACHE_STACK=kubernetes
