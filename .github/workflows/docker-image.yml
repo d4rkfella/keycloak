@@ -21,6 +21,10 @@ jobs:
       shell: bash
       run: echo SHORT_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' Dockerfile | head -n 1) >> $GITHUB_ENV
 
+    - name: Extract Major version
+      shell: bash
+      run: echo "MAJOR_VERSION=${SHORT_VERSION%%.*}" >> $GITHUB_ENV
+
     - name: Get full version
       shell: bash
       run: echo FULL_VERSION=$(curl --silent "https://api.github.com/repos/keycloak/keycloak/releases/latest" | jq -r .tag_name) >> $GITHUB_ENV
@@ -47,6 +51,7 @@ jobs:
             ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:latest
             ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.FULL_VERSION }}
             ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.SHORT_VERSION }}
+            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.MAJOR_VERSION }}
         platforms: linux/amd64
         file: Dockerfile
         context: .
