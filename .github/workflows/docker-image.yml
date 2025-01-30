@@ -71,10 +71,11 @@ jobs:
         file: Dockerfile
         context: .
 
-    - name: Set up GitHub CLI
-      uses: github/cli-action@v2
-      with:
-        gh_version: 'latest'
+    - name: Install GitHub CLI
+      run: |
+        curl -fsSL https://cli.github.com/packages/githubcli.repo?tap=gh-cli | sudo tee /etc/apt/sources.list.d/github-cli.list
+        sudo apt update
+        sudo apt install gh
 
     - name: Authenticate with GitHub CLI
       run: |
@@ -82,4 +83,4 @@ jobs:
 
     - name: Create GitHub Release with Notes
       run: |
-        gh release create ${{ github.sha }} release_notes.txt --title "Release Notes for Keycloak $BASE_IMAGE_VERSION" --notes-file release_notes.txt
+        gh release create ${{ github.sha }} release_notes.txt --title "Release Notes for Keycloak ${{ env.FULL_VERSION }}" --notes-file release_notes.txt
