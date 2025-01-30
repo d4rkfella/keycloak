@@ -83,4 +83,5 @@ jobs:
 
     - name: Create GitHub Release with Notes
       run: |
-        gh release create ${{ github.sha }} release_notes.txt --title "Release Notes for Keycloak ${{ env.FULL_VERSION }}" --notes-file release_notes.txt
+        RELEASE_TAG="v${{ env.FULL_VERSION }}"
+        gh release create $RELEASE_TAG release_notes.txt --title "Release Notes for Keycloak v${{ env.FULL_VERSION }}" --notes-file release_notes.txt
