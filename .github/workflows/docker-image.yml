@@ -32,8 +32,6 @@ jobs:
         fi
         
         echo "FULL_VERSION=${BASE_IMAGE_VERSION}" >> $GITHUB_ENV
-        echo "SHORT_VERSION=${{ env.FULL_VERSION%.* }}" >> $GITHUB_ENV
-        echo "MAJOR_VERSION=${{ env.FULL_VERSION%%.* }}" >> $GITHUB_ENV
 
     - name: Lowercase repository owner
       shell: bash
@@ -56,8 +54,8 @@ jobs:
         tags: |
             ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:latest
             ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.FULL_VERSION }}
-            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.SHORT_VERSION }}
-            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.MAJOR_VERSION }}
+            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.FULL_VERSION%.* }}
+            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.FULL_VERSION%%.* }}
         platforms: linux/amd64
         file: Dockerfile
         context: .
