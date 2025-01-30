@@ -72,7 +72,7 @@ jobs:
         context: .
 
     - name: Set up GitHub CLI
-      uses: cli/cli-action@v2
+      uses: github/cli-action@v2
       with:
         gh_version: 'latest'
 
