@@ -17,9 +17,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Extract Keycloak Version from Dockerfile
+    - name: Get short version
       shell: bash
-      run: echo KEYCLOAK_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' Dockerfile | head -n 1) >> $GITHUB_ENV
+      run: echo SHORT_VERSION=$(grep -oP '(?<=^FROM quay.io/keycloak/keycloak:)[\d\.]+(?:-\d+)?' Dockerfile | head -n 1) >> $GITHUB_ENV
+
+    - name: Get full version
+      shell: bash
+      run: echo FULL_VERSION=$(curl --silent "https://api.github.com/repos/keycloak/keycloak/releases/latest" | jq -r .tag_name) >> $GITHUB_ENV
 
     - name: Lowercase repository owner
       shell: bash
@@ -41,7 +45,8 @@ jobs:
         push: true
         tags: |
             ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:latest
-            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.KEYCLOAK_VERSION }}
+            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.FULL_VERSION }}
+            ghcr.io/${{ env.LOWERCASE_REPO_OWNER }}/keycloak:${{ env.SHORT_VERSION }}
         platforms: linux/amd64
         file: Dockerfile
         context: .
