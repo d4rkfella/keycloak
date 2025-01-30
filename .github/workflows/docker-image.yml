@@ -71,10 +71,15 @@ jobs:
         file: Dockerfile
         context: .
 
-    - name: Create GitHub Release with Notes
-      uses: gh-cli/create-release@v1
+    - name: Set up GitHub CLI
+      uses: cli/cli-action@v2
       with:
-        tag_name: ${{ github.sha }}
-        release_name: "Release Notes for Keycloak $BASE_IMAGE_VERSION"
-        body: |
-          $(cat release_notes.txt)  # Include release notes for the updated base image
+        gh_version: 'latest'
+
+    - name: Authenticate with GitHub CLI
+      run: |
+        echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+
+    - name: Create GitHub Release with Notes
+      run: |
+        gh release create ${{ github.sha }} release_notes.txt --title "Release Notes for Keycloak $BASE_IMAGE_VERSION" --notes-file release_notes.txt
