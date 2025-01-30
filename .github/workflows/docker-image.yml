@@ -83,8 +83,4 @@ jobs:
 
     - name: Create GitHub Release with Notes
       run: |
-        mkdir release_temp_dir
-        mv release_notes.txt release_temp_dir/
-        
-        cd release_temp_dir
-        gh release create v${{ env.FULL_VERSION }} release_notes.txt --title "v${{ env.FULL_VERSION }}" --notes-file release_notes.txt
+        gh release create v${{ env.FULL_VERSION }} release_notes.txt --title "v${{ env.FULL_VERSION }}" --notes-file release_notes.txt --exclude "*.tar.gz" --exclude "*.zip"
