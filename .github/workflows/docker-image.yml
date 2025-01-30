@@ -30,6 +30,15 @@ jobs:
           echo "No version label found in $BASE_IMAGE"
           exit 1
         fi
+
+        RELEASE_NOTES=$(curl -s "https://api.github.com/repos/keycloak/keycloak/releases/tags/$BASE_IMAGE_VERSION" | jq -r .body)
+
+        if [ -z "$RELEASE_NOTES" ]; then
+            echo "No release notes found for $VERSION_TAG"
+            exit 1
+          fi
+
+        echo "$RELEASE_NOTES" > release_notes.txt
         
         echo "FULL_VERSION=${BASE_IMAGE_VERSION}" >> $GITHUB_ENV
         echo "SHORT_VERSION=${BASE_IMAGE_VERSION%.*}" >> $GITHUB_ENV
@@ -61,3 +70,11 @@ jobs:
         platforms: linux/amd64
         file: Dockerfile
         context: .
+
+    - name: Create GitHub Release with Notes
+      uses: gh-cli/create-release@v1
+      with:
+        tag_name: ${{ github.sha }}
+        release_name: "Release Notes for Keycloak $BASE_IMAGE_VERSION"
+        body: |
+          $(cat release_notes.txt)  # Include release notes for the updated base image
