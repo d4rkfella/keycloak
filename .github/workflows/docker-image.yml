@@ -32,8 +32,8 @@ jobs:
         fi
         
         echo "FULL_VERSION=${BASE_IMAGE_VERSION}" >> $GITHUB_ENV
-        echo "SHORT_VERSION=${FULL_VERSION%.*}" >> $GITHUB_ENV
-        echo "MAJOR_VERSION=${FULL_VERSION%%.*}" >> $GITHUB_ENV
+        echo "SHORT_VERSION=${{ env.FULL_VERSION%.* }}" >> $GITHUB_ENV
+        echo "MAJOR_VERSION=${{ env.FULL_VERSION%%.* }}" >> $GITHUB_ENV
 
     - name: Lowercase repository owner
       shell: bash
