@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build image and create Release Notes
 
 on:
   push:
@@ -73,9 +73,9 @@ jobs:
 
     - name: Install GitHub CLI
       run: |
-        curl -fsSL https://cli.github.com/packages/githubcli.repo?tap=gh-cli | sudo tee /etc/apt/sources.list.d/github-cli.list
         sudo apt update
         sudo apt install gh
+        sudo apt install github-cli
 
     - name: Authenticate with GitHub CLI
       run: |
@@ -83,4 +83,4 @@ jobs:
 
     - name: Create GitHub Release with Notes
       run: |
-        gh release create v${{ env.FULL_VERSION }} release_notes.txt --title "v${{ env.FULL_VERSION }}" --notes-file release_notes.txt --exclude "*.tar.gz" --exclude "*.zip"
+        gh release create v${{ env.FULL_VERSION }} release_notes.txt --title "v${{ env.FULL_VERSION }}" --notes-file release_notes.txt
