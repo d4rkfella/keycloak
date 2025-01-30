@@ -2,7 +2,6 @@ FROM quay.io/keycloak/keycloak:26.1 AS builder
 
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
-
 ENV KC_DB=postgres
 
 WORKDIR /opt/keycloak
