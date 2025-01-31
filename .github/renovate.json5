@@ -46,6 +46,12 @@
       "matchUpdateTypes": ["patch"],
       "semanticCommitScope": "{{parentDir}}",
       "semanticCommitType": "fix"
+    },
+    {
+      "matchPackageNames": ["quay.io/keycloak/keycloak"],
+      "matchDatasources": ["docker"],
+      "sourceUrl": "https://github.com/keycloak/keycloak"
+      "changelogUrl": "https://www.keycloak.org/docs/latest/release_notes/index.html"
     }
   ]
 }
