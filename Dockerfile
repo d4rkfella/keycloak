@@ -15,5 +15,3 @@ ENV KC_CACHE_STACK=kubernetes
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
 
 LABEL org.opencontainers.image.source="https://github.com/keycloak/keycloak"
-LABEL org.opencontainers.image.url="https://github.com/keycloak/keycloak"
-LABEL org.opencontainers.image.title="keycloak"
