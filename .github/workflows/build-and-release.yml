@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       packages: write
     steps:
     - name: Checkout code
@@ -21,25 +21,12 @@ jobs:
       shell: bash
       run: |
         BASE_IMAGE=$(grep -oP '(?<=^FROM\s)[^\s]+' Dockerfile | head -n 1)
-        
         docker pull $BASE_IMAGE
-        
         BASE_IMAGE_VERSION=$(docker inspect --format '{{ index .Config.Labels "org.opencontainers.image.version" }}' $BASE_IMAGE)
-        
         if [ -z "$BASE_IMAGE_VERSION" ]; then
           echo "No version label found in $BASE_IMAGE"
           exit 1
         fi
-
-        RELEASE_NOTES=$(curl -s "https://api.github.com/repos/keycloak/keycloak/releases/tags/$BASE_IMAGE_VERSION" | jq -r .body)
-
-        if [ -z "$RELEASE_NOTES" ]; then
-            echo "No release notes found for $VERSION_TAG"
-            exit 1
-          fi
-
-        echo "$RELEASE_NOTES" > release_notes.txt
-        
         echo "FULL_VERSION=${BASE_IMAGE_VERSION}" >> $GITHUB_ENV
         echo "SHORT_VERSION=${BASE_IMAGE_VERSION%.*}" >> $GITHUB_ENV
         echo "MAJOR_VERSION=${BASE_IMAGE_VERSION%%.*}" >> $GITHUB_ENV
@@ -70,16 +57,3 @@ jobs:
         platforms: linux/amd64
         file: Dockerfile
         context: .
-
-    - name: Install GitHub CLI
-      run: |
-        sudo apt update
-        sudo apt install gh
-
-    - name: Authenticate with GitHub CLI
-      run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
-
-    - name: Create GitHub Release with Notes
-      run: |
-        gh release create ${{ env.FULL_VERSION }} release_notes.txt --title "${{ env.FULL_VERSION }}" --notes-file release_notes.txt
