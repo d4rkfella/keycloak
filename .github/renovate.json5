@@ -68,6 +68,15 @@
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
+      "description": ["Auto-merge minor and patch docker image updates"],
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "automergeType": "pr",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["/keycloak/"],
+      "ignoreTests": true
+    },
+    {
       "matchUpdateTypes": ["major"],
       "labels": ["type/major"]
     },
