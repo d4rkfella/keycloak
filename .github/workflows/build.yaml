@@ -57,12 +57,13 @@ jobs:
       shell: bash
       run: |
         BASE_IMAGE=$(grep -oP '(?<=^FROM\s)[^\s]+' Dockerfile | head -n 1)
-        docker pull $BASE_IMAGE
-        BASE_IMAGE_VERSION=$(docker inspect --format '{{ index .Config.Labels "org.opencontainers.image.version" }}' $BASE_IMAGE)
+        BASE_IMAGE_VERSION=$(crane config $BASE_IMAGE | jq -r '.config.Labels["org.opencontainers.image.version"]')
+        
         if [ -z "$BASE_IMAGE_VERSION" ]; then
           echo "No version label found in $BASE_IMAGE"
           exit 1
         fi
+        
         echo "VERSION=${BASE_IMAGE_VERSION}" >> $GITHUB_ENV
 
     - name: Log in to GitHub Container Registry (GHCR)
